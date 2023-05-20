@@ -15,6 +15,12 @@
 		C4A86C712A1649BE00C4391A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4A86C6F2A1649BE00C4391A /* Main.storyboard */; };
 		C4A86C732A1649BF00C4391A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4A86C722A1649BF00C4391A /* Assets.xcassets */; };
 		C4A86C762A1649BF00C4391A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4A86C742A1649BF00C4391A /* LaunchScreen.storyboard */; };
+		C4A86CAD2A168E6400C4391A /* FightingScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4A86CAC2A168E6400C4391A /* FightingScene.sks */; };
+		C4A86CB12A168EA400C4391A /* FightingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A86CB02A168EA400C4391A /* FightingScene.swift */; };
+		C4A86CDA2A17561200C4391A /* FunctionSceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A86CD92A17561200C4391A /* FunctionSceneController.swift */; };
+		C4A86CDC2A175AA200C4391A /* PracticeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A86CDB2A175AA200C4391A /* PracticeScene.swift */; };
+		C4A86CDE2A175ABC00C4391A /* PracticeScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4A86CDD2A175ABC00C4391A /* PracticeScene.sks */; };
+		C4A86CE02A17EECF00C4391A /* ChickenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A86CDF2A17EECF00C4391A /* ChickenState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +33,12 @@
 		C4A86C702A1649BE00C4391A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C4A86C722A1649BF00C4391A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4A86C752A1649BF00C4391A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C4A86CAC2A168E6400C4391A /* FightingScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FightingScene.sks; sourceTree = "<group>"; };
+		C4A86CB02A168EA400C4391A /* FightingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FightingScene.swift; sourceTree = "<group>"; };
+		C4A86CD92A17561200C4391A /* FunctionSceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionSceneController.swift; sourceTree = "<group>"; };
+		C4A86CDB2A175AA200C4391A /* PracticeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeScene.swift; sourceTree = "<group>"; };
+		C4A86CDD2A175ABC00C4391A /* PracticeScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PracticeScene.sks; sourceTree = "<group>"; };
+		C4A86CDF2A17EECF00C4391A /* ChickenState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChickenState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,15 +72,37 @@
 			isa = PBXGroup;
 			children = (
 				C4A86C652A1649BE00C4391A /* AppDelegate.swift */,
-				C4A86C672A1649BE00C4391A /* GameScene.sks */,
-				C4A86C692A1649BE00C4391A /* Actions.sks */,
-				C4A86C6B2A1649BE00C4391A /* GameScene.swift */,
 				C4A86C6D2A1649BE00C4391A /* GameViewController.swift */,
 				C4A86C6F2A1649BE00C4391A /* Main.storyboard */,
 				C4A86C722A1649BF00C4391A /* Assets.xcassets */,
 				C4A86C742A1649BF00C4391A /* LaunchScreen.storyboard */,
+				C4A86CAE2A168E7600C4391A /* Scenes */,
 			);
 			path = "Sabung Ayam";
+			sourceTree = "<group>";
+		};
+		C4A86CAE2A168E7600C4391A /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				C4A86CAF2A168E8200C4391A /* Controllers */,
+				C4A86C672A1649BE00C4391A /* GameScene.sks */,
+				C4A86C692A1649BE00C4391A /* Actions.sks */,
+				C4A86CAC2A168E6400C4391A /* FightingScene.sks */,
+				C4A86CDD2A175ABC00C4391A /* PracticeScene.sks */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		C4A86CAF2A168E8200C4391A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C4A86C6B2A1649BE00C4391A /* GameScene.swift */,
+				C4A86CB02A168EA400C4391A /* FightingScene.swift */,
+				C4A86CDB2A175AA200C4391A /* PracticeScene.swift */,
+				C4A86CD92A17561200C4391A /* FunctionSceneController.swift */,
+				C4A86CDF2A17EECF00C4391A /* ChickenState.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,8 +163,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4A86CDE2A175ABC00C4391A /* PracticeScene.sks in Resources */,
 				C4A86C712A1649BE00C4391A /* Main.storyboard in Resources */,
 				C4A86C682A1649BE00C4391A /* GameScene.sks in Resources */,
+				C4A86CAD2A168E6400C4391A /* FightingScene.sks in Resources */,
 				C4A86C732A1649BF00C4391A /* Assets.xcassets in Resources */,
 				C4A86C762A1649BF00C4391A /* LaunchScreen.storyboard in Resources */,
 				C4A86C6A2A1649BE00C4391A /* Actions.sks in Resources */,
@@ -144,9 +180,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4A86CB12A168EA400C4391A /* FightingScene.swift in Sources */,
+				C4A86CDC2A175AA200C4391A /* PracticeScene.swift in Sources */,
 				C4A86C6C2A1649BE00C4391A /* GameScene.swift in Sources */,
 				C4A86C6E2A1649BE00C4391A /* GameViewController.swift in Sources */,
+				C4A86CDA2A17561200C4391A /* FunctionSceneController.swift in Sources */,
 				C4A86C662A1649BE00C4391A /* AppDelegate.swift in Sources */,
+				C4A86CE02A17EECF00C4391A /* ChickenState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,12 +335,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = U58Z5DC5TF;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.action-games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -323,12 +365,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = U58Z5DC5TF;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.action-games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
