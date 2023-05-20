@@ -26,7 +26,7 @@ class FightingScene: SKScene {
     var joystickAction : Bool = false
     var knobRadius : CGFloat = 48.0
     var jumpAction : Bool = false
-    var jumpHeight: CGFloat = 1000
+    var jumpHeight: CGFloat = 50
     
     // Movement Measure
     var movementButtonRadius : CGFloat = 56.0
@@ -36,7 +36,7 @@ class FightingScene: SKScene {
     var playerFacingRight: Bool = true
     var playerSpeed: CGFloat = 4.0
     var currentMovement: CGFloat = 0
-    var jumpThreshold: CGFloat = 47.0
+    var jumpThreshold: CGFloat = 20.0
     
     //Player State
     var playerStateMachine : GKStateMachine!
@@ -144,6 +144,7 @@ extension FightingScene {
             // Jump Indicator
             if yPosition > jumpThreshold {
                 jumpAction = true
+                playerJump()
             }
         }
     }
@@ -168,6 +169,8 @@ extension FightingScene {
 // MARK: Action
 
 extension FightingScene {
+    
+    // Reset Knob Position
     func resetKnobPosition(){
         let initalPosition = CGPoint(x: 0, y: 0)
         let moveBack = SKAction.move(to: initalPosition, duration: 0.1)
@@ -189,12 +192,8 @@ extension FightingScene {
         let xPosition = Double(joystickKnob.position.x)
         let yPosition = joystickKnob.position.y
         
-        let jumpAction : SKAction!
-        let onJumping = yPosition > 47.0
-        
         let displacement = CGVector(dx: deltaTime * xPosition * playerSpeed, dy: 0)
         let move = SKAction.move(by: displacement, duration: 0)
-        let jumping = SKAction.applyImpulse(CGVector(dx: 0, dy: 100), duration: previousTimeInterval)
         
         let faceAction : SKAction!
         let movingRight = xPosition > 0
@@ -214,24 +213,29 @@ extension FightingScene {
         }
         
         player1?.run(faceAction)
+        
+        if yPosition > jumpThreshold.self {
+            player1?.physicsBody?.applyImpulse(CGVector(dx: 0, dy: jumpHeight))
+        }
     }
-    
-//    func playerJump() {
-//        let jumpHeight: CGFloat = 10
-//        let currentY = player1?.position.y ?? 0.0
-//        player1?.position.y = currentY + jumpHeight
-//
-//        jumpAction = false
-//        let jumpDuration: TimeInterval = 0.5
-//
-//        let jumpAction = SKAction.moveBy(x: 0, y: jumpHeight, duration: jumpDuration)
-//        player1?.run(jumpAction)
-//    }
 }
 
+extension FightingScene {
+    func playerJump() {
+        guard let player1 = player1 else { return }
+        
+        // Check if player already jumping
+        if playerStateMachine.currentState is JumpingState { return }
+        if player1.position.y <= jumpThreshold {
+            let jumpImpulse = CGVector(dx: 0, dy: jumpHeight)
+            player1.physicsBody?.applyImpulse(jumpImpulse)
+            
+            playerStateMachine.enter(JumpingState.self)
+        }
+    }
+}
 
-
-
+// OLD CODE
 /*
 extension FightingScene {
     
@@ -358,4 +362,14 @@ extension FightingScene {
     }
     
 }
+ 
+  func playerJump() {
+      let jumpHeight: CGFloat = 10
+      let currentY = player1?.position.y ?? 0.0
+      player1?.position.y = currentY + jumpHeight
+      jumpAction = false
+      let jumpDuration: TimeInterval = 0.5
+      let jumpAction = SKAction.moveBy(x: 0, y: jumpHeight, duration: jumpDuration)
+      player1?.run(jumpAction)
+  }
 */
