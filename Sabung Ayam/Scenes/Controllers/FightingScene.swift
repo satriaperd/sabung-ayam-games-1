@@ -11,22 +11,40 @@ import GameplayKit
 class FightingScene: SKScene {
     
     // Player Node
-    var player1 : SKNode?
-    var player2 : SKNode?
+    var player1: SKNode?
+    var player2: SKNode?
+    
+    // Health Bar Properties
+    var player1HealthBar: SKNode?
+    var player2HealthBar: SKNode?
+    var player1HealthBarBackground: SKNode?
+    var player2HealthBarBackground: SKNode?
+    
+    var maxPlayerHealth: CGFloat = 100
+    var currentPlayer1Health: CGFloat = 100
+    var currentPlayer2Health: CGFloat = 100
     
     // Movement Button Node
-    var joystick : SKNode?
-    var joystickKnob : SKNode?
+    var joystick: SKNode?
+    var joystickKnob: SKNode?
     
     // Attack Button Node
-    var attackButton : SKNode?
-    var skillButton : SKNode?
+    var attackButton: SKNode?
+    var skillButton: SKNode?
+    var attackButtonAction: Bool = false
+    var skillButtonAction: Bool = false
+    
+    // Damage Hit
+    var hitBoxSprite: SKSpriteNode?
+    var hitBoxAction: Bool = false
+    var damageAttack: CGFloat = 20
     
     // Movement Button Action
-    var joystickAction : Bool = false
-    var knobRadius : CGFloat = 48.0
-    var jumpAction : Bool = false
-    var jumpHeight: CGFloat = 50
+    var joystickAction: Bool = false
+    var knobRadius: CGFloat = 48.0
+    var jumpAction: Bool = false
+    var jumpHeight: CGFloat = 200
+    var jumpThreshold: CGFloat = 15
     
     // Movement Measure
     var movementButtonRadius : CGFloat = 56.0
@@ -36,8 +54,7 @@ class FightingScene: SKScene {
     var playerFacingRight: Bool = true
     var playerSpeed: CGFloat = 4.0
     var currentMovement: CGFloat = 0
-    var jumpThreshold: CGFloat = 20.0
-    
+
     //Player State
     var playerStateMachine : GKStateMachine!
     
@@ -46,6 +63,9 @@ class FightingScene: SKScene {
     var upperBorder = SKShapeNode()
     var leftBorder = SKShapeNode()
     var rightBorder = SKShapeNode()
+    
+    // Indikator Testing Loop
+    var indikatorAngka : Int = 1
 
 //
 //    let playerMovePerSec: CGFloat = 50.0
@@ -59,11 +79,25 @@ class FightingScene: SKScene {
         
         // Player
         player1 = childNode(withName: "player1")
+        player2 = childNode(withName: "player2")
+        
+        // Player Health Bar
+        player1HealthBar = childNode(withName: "player1HealthBar")
+        player2HealthBar = childNode(withName: "player2HealthBar")
+        player1HealthBarBackground = childNode(withName: "player1HealthBarBackground")
+        player2HealthBarBackground = childNode(withName: "player2HealthBarBackground")
         
         // Movement Button
         joystick = childNode(withName: "joystick")
         joystickKnob = joystick?.childNode(withName: "knob")
         
+        // Attack Button
+        attackButton = childNode(withName: "attackButton")
+        skillButton = childNode(withName: "skillButton")
+        
+        // Hit Box Player
+        hitBoxSprite = SKSpriteNode()
+               
         // Player State Machine
         playerStateMachine = GKStateMachine(states: [
         JumpingState(playerNode: player1!),
@@ -98,10 +132,6 @@ class FightingScene: SKScene {
         addChild(bottomBorder)
         
         playerStateMachine.enter(IdleState.self)
-        
-        // Attack Button
-//        attackButton = childNode(withName: "attackButton")
-//        skillButton = childNode(withName: "skillButton")
     }
 }
 
@@ -112,10 +142,23 @@ extension FightingScene {
     // Touch Began
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
+            
+            // Joystick Control
             if let joystickKnob = joystickKnob {
                 let location = touch.location(in: joystick!)
                 joystickAction = joystickKnob.frame.contains(location)
             }
+            
+            // Attack Button Here
+            if let attackButton = attackButton {
+                
+                let location = touch.location(in: self)
+                if attackButton.contains(location) {
+                    attackButtonAction = true
+                }
+            }
+            
+            jumpAction = true
         }
     }
     
@@ -136,15 +179,13 @@ extension FightingScene {
                 joystickKnob.position = position
             } else {
                 joystickKnob.position = CGPoint(x: cos(angle) * knobRadius, y: sin(angle) * knobRadius)
-                print("\(joystickKnob.position)")
             }
             
             let yPosition = joystickKnob.position.y
             
             // Jump Indicator
             if yPosition > jumpThreshold {
-                jumpAction = true
-                playerJump()
+                    playerJump()
             }
         }
     }
@@ -161,6 +202,15 @@ extension FightingScene {
             
             if xJoystickCoordinate > -xLimit && xJoystickCoordinate < xLimit {
                 resetKnobPosition()
+            }
+            
+            if let attackButton = attackButton {
+                
+                let location = touch.location(in: self)
+                if attackButton.contains(location) {
+                    attackButtonAction = false
+                    chickenAttack(state: false)
+                }
             }
         }
     }
@@ -190,7 +240,7 @@ extension FightingScene {
         guard let joystickKnob = joystickKnob else { return }
         
         let xPosition = Double(joystickKnob.position.x)
-        let yPosition = joystickKnob.position.y
+//        let yPosition = joystickKnob.position.y
         
         let displacement = CGVector(dx: deltaTime * xPosition * playerSpeed, dy: 0)
         let move = SKAction.move(by: displacement, duration: 0)
@@ -213,24 +263,61 @@ extension FightingScene {
         }
         
         player1?.run(faceAction)
-        
-        if yPosition > jumpThreshold.self {
-            player1?.physicsBody?.applyImpulse(CGVector(dx: 0, dy: jumpHeight))
-        }
+        chickenAttack(state: true)
     }
 }
 
+// Function
 extension FightingScene {
+    
     func playerJump() {
         guard let player1 = player1 else { return }
+
+        if jumpAction {
+
+            if player1.position.y <= jumpThreshold {
+                let jumpImpulse = CGVector(dx: 0, dy: jumpHeight)
+                player1.physicsBody?.applyImpulse(jumpImpulse)
+
+                playerStateMachine.enter(JumpingState.self)
+            }
+
+            jumpAction = false
+        }
+
+
+    }
+    
+    // Update Heatlh Bar
+    func updateHealthBars(player1Health: CGFloat, player2Health: CGFloat) {
         
-        // Check if player already jumping
-        if playerStateMachine.currentState is JumpingState { return }
-        if player1.position.y <= jumpThreshold {
-            let jumpImpulse = CGVector(dx: 0, dy: jumpHeight)
-            player1.physicsBody?.applyImpulse(jumpImpulse)
+        // Calculate Healthbar for each player
+        let player1HealthbarPercentage = player1Health / maxPlayerHealth
+        let player2HealthbarPercentage = player2Health / maxPlayerHealth
+        
+        // Calculate the new width for the health bar
+        player1HealthBar?.xScale = player1HealthbarPercentage
+        player2HealthBar?.xScale = player2HealthbarPercentage
+    }
+    
+    
+    // Function Attack
+    func chickenAttack(state: Bool = false){
+        
+        hitBoxSprite = SKSpriteNode(color: .green, size: CGSize(width: 24, height: 24))
+        hitBoxSprite?.position = CGPoint(x: 40, y: -12)
+        hitBoxSprite?.zPosition = 10
+        
+        if attackButtonAction && state {
+            player1?.addChild(hitBoxSprite!)
+            print("hit box show")
             
-            playerStateMachine.enter(JumpingState.self)
+            /* Notes: Create hit damage to decrease healthbar
+                if hitbox in enemy
+                    enemy.health - damage
+             */
+        } else {
+            player1?.removeAllChildren()
         }
     }
 }
