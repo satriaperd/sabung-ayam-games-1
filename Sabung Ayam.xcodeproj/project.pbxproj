@@ -21,8 +21,6 @@
 		C4A86CDC2A175AA200C4391A /* PracticeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A86CDB2A175AA200C4391A /* PracticeScene.swift */; };
 		C4A86CDE2A175ABC00C4391A /* PracticeScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4A86CDD2A175ABC00C4391A /* PracticeScene.sks */; };
 		C4A86CE02A17EECF00C4391A /* ChickenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A86CDF2A17EECF00C4391A /* ChickenState.swift */; };
-		C4A86CE52A1A38C300C4391A /* FIghtingScene2.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4A86CE42A1A38C300C4391A /* FIghtingScene2.sks */; };
-		C4A86CE72A1A38CF00C4391A /* FightingScene2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A86CE62A1A38CF00C4391A /* FightingScene2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,8 +39,6 @@
 		C4A86CDB2A175AA200C4391A /* PracticeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeScene.swift; sourceTree = "<group>"; };
 		C4A86CDD2A175ABC00C4391A /* PracticeScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PracticeScene.sks; sourceTree = "<group>"; };
 		C4A86CDF2A17EECF00C4391A /* ChickenState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChickenState.swift; sourceTree = "<group>"; };
-		C4A86CE42A1A38C300C4391A /* FIghtingScene2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FIghtingScene2.sks; sourceTree = "<group>"; };
-		C4A86CE62A1A38CF00C4391A /* FightingScene2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FightingScene2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +90,6 @@
 				C4A86C692A1649BE00C4391A /* Actions.sks */,
 				C4A86CAC2A168E6400C4391A /* FightingScene.sks */,
 				C4A86CDD2A175ABC00C4391A /* PracticeScene.sks */,
-				C4A86CE42A1A38C300C4391A /* FIghtingScene2.sks */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -107,7 +102,6 @@
 				C4A86CDB2A175AA200C4391A /* PracticeScene.swift */,
 				C4A86CD92A17561200C4391A /* FunctionSceneController.swift */,
 				C4A86CDF2A17EECF00C4391A /* ChickenState.swift */,
-				C4A86CE62A1A38CF00C4391A /* FightingScene2.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -178,7 +172,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4A86CDE2A175ABC00C4391A /* PracticeScene.sks in Resources */,
-				C4A86CE52A1A38C300C4391A /* FIghtingScene2.sks in Resources */,
 				C4A86C712A1649BE00C4391A /* Main.storyboard in Resources */,
 				C4A86C682A1649BE00C4391A /* GameScene.sks in Resources */,
 				C4A86CAD2A168E6400C4391A /* FightingScene.sks in Resources */,
@@ -202,7 +195,6 @@
 				C4A86CDA2A17561200C4391A /* FunctionSceneController.swift in Sources */,
 				C4A86C662A1649BE00C4391A /* AppDelegate.swift in Sources */,
 				C4A86CE02A17EECF00C4391A /* ChickenState.swift in Sources */,
-				C4A86CE72A1A38CF00C4391A /* FightingScene2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
