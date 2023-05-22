@@ -66,14 +66,6 @@ class FightingScene: SKScene {
     
     // Indikator Testing Loop
     var indikatorAngka : Int = 1
-
-//
-//    let playerMovePerSec: CGFloat = 50.0
-//    var velocity = CGPoint.zero
-//
-    // Attack Button Action
-//    var attackButtonAction : Bool = false
-//    var skillButtonAction : Bool = false
     
     override func didMove(to view: SKView) {
         
@@ -310,12 +302,12 @@ extension FightingScene {
         
         if attackButtonAction && state {
             player1?.addChild(hitBoxSprite!)
-            print("hit box show")
             
             /* Notes: Create hit damage to decrease healthbar
                 if hitbox in enemy
                     enemy.health - damage
              */
+            
         } else {
             player1?.removeAllChildren()
         }
