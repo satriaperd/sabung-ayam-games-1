@@ -12,6 +12,8 @@ class FightingScene: SKScene {
     
     // Player Node
     var player1: SKNode?
+    var player1RHand: SKNode?
+    var player1LHand: SKNode?
     var player2: SKNode?
     
     // Health Bar Properties
@@ -34,9 +36,16 @@ class FightingScene: SKScene {
     var attackButtonAction: Bool = false
     var skillButtonAction: Bool = false
     
-    // Damage Hit
+    // Hit Box Properties
     var hitBoxSprite: SKSpriteNode?
     var hitBoxAction: Bool = false
+    
+    // Hurt Box Properties
+    var hurtBoxSprite: SKSpriteNode?
+    var hurtBoxMoving: Bool = true
+    var hurtBoxOffset: CGFloat = 20
+    
+    // Damage Attack
     var damageAttack: CGFloat = 20
     
     // Movement Button Action
@@ -71,6 +80,10 @@ class FightingScene: SKScene {
         
         // Player
         player1 = childNode(withName: "player1")
+        
+        player1RHand = player1?.childNode(withName: "player1RHand")
+        player1LHand = player1?.childNode(withName: "player1LHand")
+        
         player2 = childNode(withName: "player2")
         
         // Player Health Bar
@@ -87,9 +100,12 @@ class FightingScene: SKScene {
         attackButton = childNode(withName: "attackButton")
         skillButton = childNode(withName: "skillButton")
         
-        // Hit Box Player
-        hitBoxSprite = SKSpriteNode()
-               
+        // Hurt Box
+//        hurtBoxSprite = SKSpriteNode(color: .clear, size: (player1?.calculateAccumulatedFrame().size)!)
+//        hurtBoxSprite?.position.x = (player1?.position.x)!
+//        hurtBoxSprite?.zPosition = 5
+//        addChild(hurtBoxSprite!)
+//
         // Player State Machine
         playerStateMachine = GKStateMachine(states: [
         JumpingState(playerNode: player1!),
@@ -169,6 +185,7 @@ extension FightingScene {
             
             if knobRadius > length {
                 joystickKnob.position = position
+                hurtBoxMoving = true
             } else {
                 joystickKnob.position = CGPoint(x: cos(angle) * knobRadius, y: sin(angle) * knobRadius)
             }
@@ -232,7 +249,6 @@ extension FightingScene {
         guard let joystickKnob = joystickKnob else { return }
         
         let xPosition = Double(joystickKnob.position.x)
-//        let yPosition = joystickKnob.position.y
         
         let displacement = CGVector(dx: deltaTime * xPosition * playerSpeed, dy: 0)
         let move = SKAction.move(by: displacement, duration: 0)
@@ -252,6 +268,10 @@ extension FightingScene {
         }
         else {
             faceAction = move
+        }
+        
+        if hurtBoxMoving {
+            hurtBoxSprite?.position = player1!.position
         }
         
         player1?.run(faceAction)
@@ -313,142 +333,3 @@ extension FightingScene {
         }
     }
 }
-
-// OLD CODE
-/*
-extension FightingScene {
-    
-    // Touch Began
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
-            let touchLocation = touch.location(in: self)
-            
-            // check if button movement was pressed
-            if let node = self.atPoint(touchLocation) as? SKSpriteNode {
-                switch node {
-                    
-                case rightButton :
-                    rightButtonAction = true
-                    player1?.physicsBody?.velocity.dx = 500
-                    
-                case upButton:
-                    upButtonAction = true
-                    player1?.physicsBody?.velocity.dy = 500
-                    
-                case leftButton:
-                    leftButtonAction = true
-                    player1?.physicsBody?.velocity.dx = -500
-                    
-                default:
-                    print("idle")
-                }
-            }
-                        
-            // Old Code
-            /*
-            if let node = self.atPoint(touchLocation) as? SKSpriteNode {
-                switch node {
-                    
-                case upButton:
-                    upButtonAction = true
-                    upButton?.alpha = 1.0
-                    player1?.physicsBody?.velocity.dy = playerSpeed * 4
-                    print("up button")
-                    
-                case rightButton:
-                    rightButtonAction = true
-                    player1?.physicsBody?.velocity.dx = playerSpeed
-                    print("right button")
-                    
-                case leftButton:
-                    leftButtonAction = true
-                    player1?.physicsBody?.velocity.dx = -100
-                    print("left button")
-                default :
-                    print("test")
-                    
-                }
-            }
-            */
-        }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)  {
-        for touch in touches {
-            let touchLocation = touch.location(in: self)
-            
-            if let node = self.atPoint(touchLocation) as? SKSpriteNode {
-                switch node {
-                    
-                case rightButton :
-                    rightButtonAction = false
-                    player1?.physicsBody?.velocity.dx = 500
-                    
-                case upButton:
-                    upButtonAction = false
-                    player1?.physicsBody?.velocity.dy = 500
-                    
-                case leftButton:
-                    leftButtonAction = false
-                    player1?.physicsBody?.velocity.dx = -500
-                    
-                default:
-                    print("idle")
-                }
-            }
-        }
-    }
-    
-    
-    /*
-     extension FightingScene {
-     
-     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-     for touch in touches {
-     let touchLocation = touch.location(in: self)
-     
-     if rightButtonAction {
-     rightButtonAction = rightButton!.contains(touchLocation)
-     rightButton?.alpha = 1.0
-     } else if leftButtonAction {
-     leftButtonAction = leftButton!.contains(touchLocation)
-     } else { return }
-     }
-     }
-     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-     }
-     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-     for touch in touches {
-     let touchLocation = touch.location(in: self)
-     
-     if !rightButtonAction {
-     rightButtonAction = rightButton!.contains(touchLocation)
-     rightButton?.alpha = 0.4
-     } else if !leftButtonAction {
-     leftButtonAction = leftButton!.contains(touchLocation)
-     } else { return }
-     }
-     }
-     }
-     */
-}
-
-
-extension FightingScene {
-    
-    func movePlayer() {
-        
-    }
-    
-}
- 
-  func playerJump() {
-      let jumpHeight: CGFloat = 10
-      let currentY = player1?.position.y ?? 0.0
-      player1?.position.y = currentY + jumpHeight
-      jumpAction = false
-      let jumpDuration: TimeInterval = 0.5
-      let jumpAction = SKAction.moveBy(x: 0, y: jumpHeight, duration: jumpDuration)
-      player1?.run(jumpAction)
-  }
-*/

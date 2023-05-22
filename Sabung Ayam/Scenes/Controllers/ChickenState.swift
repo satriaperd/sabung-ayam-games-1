@@ -89,3 +89,4 @@ class WalkingState: PlayerState {
         playerNode.removeAllActions()
     }
 }
+
