@@ -11,9 +11,13 @@ import GameplayKit
 class FightingScene: SKScene {
     
     // Player Node
+    var chickenBody: SKNode?
+    
     var player1: SKNode?
-    var player1RHand: SKNode?
-    var player1LHand: SKNode?
+    var player1RightHand: SKNode?
+    var player1LeftHand: SKNode?
+    var shoudlerMoving: Bool = false
+    
     var player2: SKNode?
     
     // Health Bar Properties
@@ -80,9 +84,8 @@ class FightingScene: SKScene {
         
         // Player
         player1 = childNode(withName: "player1")
-        
-        player1RHand = player1?.childNode(withName: "player1RHand")
-        player1LHand = player1?.childNode(withName: "player1LHand")
+        player1RightHand = player1?.childNode(withName: "player1RightHand")
+        player1LeftHand = player1?.childNode(withName: "player1LeftHand")
         
         player2 = childNode(withName: "player2")
         
@@ -105,7 +108,7 @@ class FightingScene: SKScene {
 //        hurtBoxSprite?.position.x = (player1?.position.x)!
 //        hurtBoxSprite?.zPosition = 5
 //        addChild(hurtBoxSprite!)
-//
+        
         // Player State Machine
         playerStateMachine = GKStateMachine(states: [
         JumpingState(playerNode: player1!),
@@ -257,11 +260,15 @@ extension FightingScene {
         let movingRight = xPosition > 0
         let movingLeft = xPosition < 0
         
+        
+        // Moving Player
         if movingLeft && playerFacingRight {
+
             playerFacingRight = false
             let faceMovement = SKAction.scaleX(to: -1, duration: 0.0)
             faceAction = SKAction.sequence([move, faceMovement])
         } else if movingRight && !playerFacingRight {
+
             playerFacingRight = true
             let faceMovement = SKAction.scaleX(to: 1, duration: 0.0)
             faceAction = SKAction.sequence([move, faceMovement])
@@ -269,7 +276,9 @@ extension FightingScene {
         else {
             faceAction = move
         }
+
         
+        // Hurt Boxes
         if hurtBoxMoving {
             hurtBoxSprite?.position = player1!.position
         }
